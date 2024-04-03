@@ -28,6 +28,29 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-rl.question("Quel est votre prénom ? ", (answer) => {
-    console.log(answer);
-});
+// Création d'un tableau de contacts
+let contactList = [];
+// constitution d'un contact par défaut
+let contact = {
+    firstName: "",
+    lastName: "",
+    tel: ""
+};
+function getContactDatas(contact, word) {
+    rl.question(`Quel est ton ${word} ? `, (answer) => {
+        if (word === "prénom") {
+            contact.firstName = answer;
+            getContactDatas(contact, "nom");
+        }
+        else if (word === "nom") {
+            contact.lastName = answer;
+            getContactDatas(contact, "tel");
+        }
+        else if (word === "tel") {
+            contact.tel = answer;
+            contactList.push(contact);
+            console.log(contactList);
+        }
+    });
+}
+getContactDatas(contact, "prénom");
